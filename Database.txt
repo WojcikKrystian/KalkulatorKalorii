@@ -1,6 +1,0 @@
-Adres bazy: www.mysql.turbohost.pl
-
-Baza danych:	krys19_caloriesCalculator
-Host:	172.16.0.149
-Użytkownik:	krys19_pr0j3kt
-Hasło:	EcTcnVAX55jh
