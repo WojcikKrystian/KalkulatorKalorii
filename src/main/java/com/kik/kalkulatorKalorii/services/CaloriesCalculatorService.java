@@ -1,7 +1,10 @@
 package com.kik.kalkulatorKalorii.services;
 
+import com.kik.kalkulatorKalorii.models.Ingredient;
 import com.kik.kalkulatorKalorii.repositories.IngredientRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class CaloriesCalculatorService {
@@ -9,7 +12,10 @@ public class CaloriesCalculatorService {
 
     public CaloriesCalculatorService(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
-        System.out.println(ingredientRepository.findByName("sugar"));
+    }
+
+    public Set<Ingredient> getAllGeneralIngredients() {
+        return ingredientRepository.findAllGeneralIngredients();
     }
 
 }

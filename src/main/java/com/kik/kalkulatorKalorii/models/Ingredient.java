@@ -1,27 +1,35 @@
 package com.kik.kalkulatorKalorii.models;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.math.BigDecimal;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"dish"})
 public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Integer proteins;
-    private Integer carbs;
-    private Integer fat;
-    private Integer kcal;
-    private BigDecimal amount;
+    private Double proteins;
+    private Double carbs;
+    private Double fat;
+    private Double kcal;
+    private Double amount;
 
     @ManyToOne
     private Dish dish;

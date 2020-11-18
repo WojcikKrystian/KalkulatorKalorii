@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Kalorii</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        Wartości dla 100g produktu
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Białko</th>
+        <th>Tłuszcz</th>
+        <th>Węglowodany</th>
+        <th>Kalorie</th>
+    </tr>
+    </thead>
+    <tr th:each="ingredient : ${ingredients}">
+        <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+        <td th:text="${ingredient.id}"></td>
+        <td th:text="${ingredient.name}"></td>
+        <td th:text="${ingredient.proteins}"></td>
+        <td th:text="${ingredient.fat}"></td>
+        <td th:text="${ingredient.carbs}"></td>
+        <td th:text="${ingredient.kcal}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
