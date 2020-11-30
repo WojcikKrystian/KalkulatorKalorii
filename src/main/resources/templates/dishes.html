@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Kalorii</title>
+    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body>
+<div th:replace="/navbar :: navbar"></div>
+    <div>
+        <div class="container">
+            <table class="table table-striped">
+                <caption>Dania</caption>
+                <thead>
+                <tr>
+                    Wartości dla 100g produktu
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nazwa</th>
+                    <th>Białko</th>
+                    <th>Tłuszcz</th>
+                    <th>Węglowodany</th>
+                    <th>Kalorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr></tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+        <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    </div>
+</body>
+</html>

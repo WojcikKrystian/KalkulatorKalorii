@@ -29,4 +29,9 @@ public class CaloriesCalculatorController {
         return "ingredients";
     }
 
+    @GetMapping("/dishes")
+    public String getAllDishes(Model model) {
+        return "dishes";
+    }
+
 }

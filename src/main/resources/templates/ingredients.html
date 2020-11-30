@@ -3,32 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Kalkulator Kalorii</title>
+    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"
+          rel="stylesheet">
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        Wartości dla 100g produktu
-    </tr>
-    <tr>
-        <th>ID</th>
-        <th>Nazwa</th>
-        <th>Białko</th>
-        <th>Tłuszcz</th>
-        <th>Węglowodany</th>
-        <th>Kalorie</th>
-    </tr>
-    </thead>
-    <tr th:each="ingredient : ${ingredients}">
-        <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
-        <td th:text="${ingredient.id}"></td>
-        <td th:text="${ingredient.name}"></td>
-        <td th:text="${ingredient.proteins}"></td>
-        <td th:text="${ingredient.fat}"></td>
-        <td th:text="${ingredient.carbs}"></td>
-        <td th:text="${ingredient.kcal}"></td>
-    </tr>
-</table>
-
+<div th:replace="/navbar :: navbar"></div>
+<div class="container">
+    <div>
+        <table class="table table-striped">
+            <caption>Składniki</caption>
+            <thead>
+            <tr>
+                Wartości dla 100g produktu
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>Nazwa</th>
+                <th>Białko</th>
+                <th>Tłuszcz</th>
+                <th>Węglowodany</th>
+                <th>Kalorie</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ingredient : ${ingredients}">
+                <td th:text="${ingredient.id}"></td>
+                <td th:text="${ingredient.name}"></td>
+                <td th:text="${ingredient.proteins}"></td>
+                <td th:text="${ingredient.fat}"></td>
+                <td th:text="${ingredient.carbs}"></td>
+                <td th:text="${ingredient.kcal}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+</div>
 </body>
 </html>
