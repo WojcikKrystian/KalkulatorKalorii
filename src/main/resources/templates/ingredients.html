@@ -9,6 +9,35 @@
 <body>
 <div th:replace="/navbar :: navbar"></div>
 <div class="container">
+    <form action="#" th:action="@{/ingredients}" th:object="${ingredient}" method="post">
+        <div>
+            <span>Uzupełnij poniższe wartości dla 100g produktu</span>
+        </div>
+        <div class="form-group">
+            <label for="name">Nazwa</label>
+            <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="Nazwa składnika" required>
+        </div>
+        <div class="form-row">
+            <div class="col form-group">
+                <label for="carbs">Węglowodany</label>
+                <input th:field="*{carbs}" type="text" class="form-control" id="carbs" placeholder="Węglowodany" required>
+            </div>
+            <div class="col form-group">
+                <label for="proteins">Białka</label>
+                <input th:field="*{proteins}" type="text" class="form-control" id="proteins" placeholder="Białko" required>
+            </div>
+            <div class="col form-group">
+                <label for="fat">Tłuszcze</label>
+                <input th:field="*{fat}" type="text" class="form-control" id="fat" placeholder="Tłuszcze" required>
+            </div>
+            <div class="col form-group">
+                <label for="kcal">Kcal</label>
+                <input th:field="*{kcal}" type="text" class="form-control" id="kcal" placeholder="Kcal" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+    <hr/>
     <div>
         <table class="table table-striped">
             <caption>Składniki</caption>
