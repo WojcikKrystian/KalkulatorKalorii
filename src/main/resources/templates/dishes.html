@@ -5,33 +5,53 @@
     <title>Kalkulator Kalorii</title>
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"
           rel="stylesheet">
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="/navbar :: navbar"></div>
-    <div>
-        <div class="container">
-            <table class="table table-striped">
-                <caption>Dania</caption>
-                <thead>
-                <tr>
-                    Wartości dla 100g produktu
-                </tr>
-                <tr>
-                    <th>ID</th>
-                    <th>Nazwa</th>
-                    <th>Białko</th>
-                    <th>Tłuszcz</th>
-                    <th>Węglowodany</th>
-                    <th>Kalorie</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr></tr>
-                </tbody>
-            </table>
-        </div>
-        <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-        <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
-    </div>
+<div class="container">
+    <ul class="nav">
+        <li class="nav-item px-2">
+            <input class="form-control" id="dishesSearch" type="text" placeholder="Szukaj..">
+        </li>
+        <li class="nav-item px-2">
+            <button type="button" class="btn btn-primary" onclick="location.href='/dishes/new'">Dodaj potrawę</button>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
+        <caption>Potrawy</caption>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Białko</th>
+            <th>Tłuszcz</th>
+            <th>Węglowodany</th>
+            <th>Kalorie</th>
+        </tr>
+        </thead>
+        <tbody id="dishesTable">
+        <tr th:each="dish : ${dishes}">
+            <td th:text="${dish.id}"></td>
+            <td th:text="${dish.name}"></td>
+            <td th:text="${dish.proteinsTotal}"></td>
+            <td th:text="${dish.fatTotal}"></td>
+            <td th:text="${dish.carbsTotal}"></td>
+            <td th:text="${dish.calTotal}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#dishesSearch").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#dishesTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) >  -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>

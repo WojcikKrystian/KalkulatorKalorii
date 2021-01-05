@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Kalorii</title>
+    <link href="../webjars/bootstrap/4.5.3/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<div th:replace="/navbar :: navbar"></div>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Dodaj potrawę</h5>
+            <form action="#" th:action="@{/dishes/new}" th:object="${dish}" method="post">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="name">Nazwa potrawy</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="Wpisz nazwę"
+                               required>
+                    </div>
+                    <div class="row">
+                        <label for="name">Składniki</label>
+                        <table class="table table-striped">
+                            <tbody th:each="ingredient,i : ${dish.ingredients}" id="newDishIngredientsTable">
+                            <tr>
+                                <td>
+                                    <input type="text" th:field="*{ingredients[__${i.index}__].name}"
+                                           class="form-control ingredientName" placeholder="Nazwa składnika"
+                                           autocomplete="off"/>
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{ingredients[__${i.index}__].amount}"
+                                           class="form-control ingredientName" placeholder="Ilość [g]"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <button type="button" id="add-new-ingredient-btn" class="btn-sm btn-primary">Dodaj
+                                składnik
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary card-link">Dodaj</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+        var newIngCounter = 0;
+        $("#add-new-ingredient-btn").click(function(){
+            newIngCounter++;
+            $("#newDishIngredientsTable").append('<tr><td><input name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control ingredientName" type="text" placeholder="Nazwa składnika" autocomplete="off" /></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" /></td></tr>');
+        });
+
+        var selector = 'input.ingredientName';
+        $(document).on('keydown.autocomplete', selector, function() {
+            $(this).autocomplete({
+                source: "/autocomplete",
+                minLength: 1
+            });
+        });
+
+
+</script>
+</body>
+</html>

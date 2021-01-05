@@ -1,18 +1,19 @@
 package com.kik.kalkulatorKalorii.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Dish {
 
     @Id
@@ -25,7 +26,7 @@ public class Dish {
     private Double calTotal = 0.0;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-    private Set<Ingredient> ingredients = new HashSet<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public Dish(String name) {
         this.name = name;

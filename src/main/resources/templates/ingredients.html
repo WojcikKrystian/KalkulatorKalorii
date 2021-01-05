@@ -5,6 +5,7 @@
     <title>Kalkulator Kalorii</title>
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"
           rel="stylesheet">
+    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="/navbar :: navbar"></div>
@@ -37,8 +38,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Dodaj</button>
     </form>
-    <hr/>
     <div>
+        <input class="form-control" id="ingredientsSearch" type="text" placeholder="Szukaj..">
         <table class="table table-striped">
             <caption>Składniki</caption>
             <thead>
@@ -54,7 +55,7 @@
                 <th>Kalorie</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="ingredientsTable">
             <tr th:each="ingredient : ${ingredients}">
                 <td th:text="${ingredient.id}"></td>
                 <td th:text="${ingredient.name}"></td>
@@ -66,8 +67,16 @@
             </tbody>
         </table>
     </div>
-    <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-    <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#ingredientsSearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#ingredientsTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) >  -1)
+                });
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
