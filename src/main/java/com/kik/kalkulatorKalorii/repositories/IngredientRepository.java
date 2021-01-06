@@ -17,6 +17,6 @@ public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
     @Query("SELECT DISTINCT ingredient.name FROM Ingredient ingredient WHERE ingredient.name like %:term%")
     Set<String> findAllNameSuggestions(String term);
 
-    @Query("SELECT DISTINCT ingredient FROM Ingredient ingredient WHERE ingredient.amount = 100 AND ingredient.dish is NULL and ingredient.name = :name")
+    @Query(value = "SELECT DISTINCT ingredient FROM Ingredient ingredient WHERE ingredient.amount = 100 AND ingredient.dish is NULL AND ingredient.name = :name")
     Ingredient findGeneralIngredientByName(String name);
 }
