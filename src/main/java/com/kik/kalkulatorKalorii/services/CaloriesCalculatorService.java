@@ -49,4 +49,8 @@ public class CaloriesCalculatorService {
     public void deleteIngredient(Long id) {
         ingredientRepository.deleteById(id);
     }
+
+    public void deleteDish(Long id) {
+        dishRepository.deleteById(id);
+    }
 }

@@ -29,6 +29,7 @@
             <th>Tłuszcz</th>
             <th>Węglowodany</th>
             <th>Kalorie</th>
+            <th>Opcje</th>
         </tr>
         </thead>
         <tbody id="dishesTable">
@@ -39,6 +40,14 @@
             <td th:text="${dish.fatTotal}"></td>
             <td th:text="${dish.carbsTotal}"></td>
             <td th:text="${dish.calTotal}"></td>
+            <td>
+                <div class="col form-group">
+                    <form action="#" th:action="@{'/dishes/delete/{id}'(id=${dish.id})}"
+                          method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
