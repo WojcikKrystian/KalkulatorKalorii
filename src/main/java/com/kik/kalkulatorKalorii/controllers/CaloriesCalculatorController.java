@@ -124,4 +124,20 @@ public class CaloriesCalculatorController {
         service.deleteDish(dishId);
         return "redirect:/dishes";
     }
+
+    @GetMapping("/ingredients/edit/{ingredientId}")
+    public String editIngredient(@PathVariable Long ingredientId, Model model) {
+        Optional<Ingredient> ingredientOptional = service.getIngredientById(ingredientId);
+        if(ingredientOptional.isPresent()) {
+            model.addAttribute("ingredient", ingredientOptional.get());
+            return "ingredient-details";
+        }
+        return "ingredients";
+    }
+
+    @PostMapping("/ingredients/edit/{ingredientId}")
+    public String editIngredient(@PathVariable Long ingredientId, @ModelAttribute Ingredient ingredient) {
+        service.updateIngredient(ingredientId, ingredient);
+        return "redirect:/ingredients";
+    }
 }

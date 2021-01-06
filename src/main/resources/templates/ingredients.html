@@ -67,10 +67,14 @@
                 <td th:text="${ingredient.carbs}"></td>
                 <td th:text="${ingredient.kcal}"></td>
                 <td>
-                    <div class="col form-group">
+                    <div class="col form-row">
                         <form action="#" th:action="@{'/ingredients/delete/{id}'(id=${ingredient.id})}"
                               method="post">
-                            <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                            <button type="submit" class="btn btn-danger btn-sm" style="margin-right: 5px">Usuń</button>
+                        </form>
+                        <form action="#" th:action="@{'/ingredients/edit/{id}'(id=${ingredient.id})}"
+                              method="get">
+                            <button type="submit" class="btn btn-info btn-sm">Edytuj</button>
                         </form>
                     </div>
                 </td>

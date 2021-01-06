@@ -53,4 +53,19 @@ public class CaloriesCalculatorService {
     public void deleteDish(Long id) {
         dishRepository.deleteById(id);
     }
+
+    public Optional<Ingredient> getIngredientById(Long id) {
+        return ingredientRepository.findById(id);
+    }
+
+    public void updateIngredient(Long id, Ingredient updatedIngredient) {
+        Optional<Ingredient> ingredient = ingredientRepository.findById(id);
+        if(ingredient.isPresent()) {
+            ingredient.get().setName(updatedIngredient.getName());
+            ingredient.get().setCarbs(updatedIngredient.getCarbs());
+            ingredient.get().setFat(updatedIngredient.getFat());
+            ingredient.get().setProteins(updatedIngredient.getProteins());
+            ingredientRepository.save(ingredient.get());
+        }
+    }
 }
