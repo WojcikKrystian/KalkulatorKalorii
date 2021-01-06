@@ -69,6 +69,7 @@ public class CaloriesCalculatorController {
         Dish newDish = new Dish();
         newDish.setIngredients(results);
         model.addAttribute("dish", newDish);
+        model.addAttribute("generalIngredients", service.getAllGeneralIngredients());
         return "new-dish";
     }
 
@@ -110,11 +111,5 @@ public class CaloriesCalculatorController {
 
         service.saveDish(newDish);
         return "redirect:/dishes";
-    }
-
-    @RequestMapping(value = "/autocomplete")
-    @ResponseBody
-    public Set<String> autoIngredientName(@RequestParam(value = "term", required = false, defaultValue = "") String term) {
-        return service.getSuggestedNames(term);
     }
 }

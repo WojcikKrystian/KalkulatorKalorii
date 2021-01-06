@@ -28,9 +28,14 @@
                             <tbody th:each="ingredient,i : ${dish.ingredients}" id="newDishIngredientsTable">
                             <tr>
                                 <td>
-                                    <input type="text" th:field="*{ingredients[__${i.index}__].name}"
-                                           class="form-control ingredientName" placeholder="Nazwa składnika"
-                                           autocomplete="off"/>
+                                    <div class="form-group">
+                                        <select class="form-control" required="required" th:field="*{ingredients[__${i.index}__].name}">
+                                            <option disabled="disabled" value="" selected hidden>Nazwa składnika</option>
+                                            <option th:each="generalIngredient : ${generalIngredients}" th:value="${generalIngredient.name}"
+                                                    th:text="${generalIngredient.name}">
+                                            </option>
+                                        </select>
+                                    </div>
                                 </td>
                                 <td>
                                     <input type="text" th:field="*{ingredients[__${i.index}__].amount}"
@@ -52,22 +57,17 @@
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
+        var generalIngredients = [[${generalIngredients}]];
         var newIngCounter = 0;
         $("#add-new-ingredient-btn").click(function(){
             newIngCounter++;
-            $("#newDishIngredientsTable").append('<tr><td><input name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control ingredientName" type="text" placeholder="Nazwa składnika" autocomplete="off" /></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" /></td></tr>');
+            $("#newDishIngredientsTable").append('<tr><td><div class="form-group"><select name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control" required="required"><option disabled="disabled" value="" selected hidden>Nazwa składnika</option></select></div></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" /></td></tr>');
+            var select = document.getElementById('ingredients' + newIngCounter + '.name')
+            for (var ingredient of generalIngredients) {
+                select.options[select.options.length] = new Option(ingredient.name, ingredient.name);
+            }
         });
-
-        var selector = 'input.ingredientName';
-        $(document).on('keydown.autocomplete', selector, function() {
-            $(this).autocomplete({
-                source: "/autocomplete",
-                minLength: 1
-            });
-        });
-
-
 </script>
 </body>
 </html>
