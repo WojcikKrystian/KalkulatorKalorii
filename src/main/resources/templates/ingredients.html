@@ -21,19 +21,21 @@
         <div class="form-row">
             <div class="col form-group">
                 <label for="carbs">Węglowodany</label>
-                <input th:field="*{carbs}" type="text" class="form-control" id="carbs" placeholder="Węglowodany" required>
+                <input th:field="*{carbs}" type="number" class="form-control" id="carbs" placeholder="Węglowodany"
+                       required>
             </div>
             <div class="col form-group">
                 <label for="proteins">Białka</label>
-                <input th:field="*{proteins}" type="text" class="form-control" id="proteins" placeholder="Białko" required>
+                <input th:field="*{proteins}" type="number" class="form-control" id="proteins" placeholder="Białko"
+                       required>
             </div>
             <div class="col form-group">
                 <label for="fat">Tłuszcze</label>
-                <input th:field="*{fat}" type="text" class="form-control" id="fat" placeholder="Tłuszcze" required>
+                <input th:field="*{fat}" type="number" class="form-control" id="fat" placeholder="Tłuszcze" required>
             </div>
             <div class="col form-group">
                 <label for="kcal">Kcal</label>
-                <input th:field="*{kcal}" type="text" class="form-control" id="kcal" placeholder="Kcal" required>
+                <input th:field="*{kcal}" type="number" class="form-control" id="kcal" placeholder="Kcal" required>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Dodaj</button>
@@ -53,6 +55,7 @@
                 <th>Tłuszcz</th>
                 <th>Węglowodany</th>
                 <th>Kalorie</th>
+                <th>Opcje</th>
             </tr>
             </thead>
             <tbody id="ingredientsTable">
@@ -63,6 +66,14 @@
                 <td th:text="${ingredient.fat}"></td>
                 <td th:text="${ingredient.carbs}"></td>
                 <td th:text="${ingredient.kcal}"></td>
+                <td>
+                    <div class="col form-group">
+                        <form action="#" th:action="@{'/ingredients/delete/{id}'(id=${ingredient.id})}"
+                              method="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -76,6 +87,7 @@
                 });
             });
         });
+
     </script>
 </div>
 </body>

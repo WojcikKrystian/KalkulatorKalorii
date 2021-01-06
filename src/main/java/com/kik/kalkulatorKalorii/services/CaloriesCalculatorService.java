@@ -45,4 +45,8 @@ public class CaloriesCalculatorService {
     public void saveDish(Dish dish) {
         dishRepository.save(dish);
     }
+
+    public void deleteIngredient(Long id) {
+        ingredientRepository.deleteById(id);
+    }
 }

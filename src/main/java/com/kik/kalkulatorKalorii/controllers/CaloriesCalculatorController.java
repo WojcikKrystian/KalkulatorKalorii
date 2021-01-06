@@ -112,4 +112,10 @@ public class CaloriesCalculatorController {
         service.saveDish(newDish);
         return "redirect:/dishes";
     }
+
+    @PostMapping("/ingredients/delete/{ingredientId}")
+    public String deleteIngredient(@PathVariable Long ingredientId) {
+        service.deleteIngredient(ingredientId);
+        return "redirect:/ingredients";
+    }
 }
