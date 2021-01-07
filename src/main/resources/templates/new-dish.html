@@ -6,6 +6,7 @@
     <link href="../webjars/bootstrap/4.5.3/css/bootstrap.min.css"
           rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
@@ -41,6 +42,11 @@
                                     <input type="number" th:field="*{ingredients[__${i.index}__].amount}"
                                            class="form-control ingredientName" placeholder="Ilość [g]" step="0.001" required/>
                                 </td>
+                                <td>
+                                    <button type="button" onclick="deleteIngredient(this)" class="remove-ingredient-btn" style="padding: 0;border: none; background: none;">
+                                        <i class="fas fa-trash" style="color: red"></i>
+                                    </button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -62,12 +68,18 @@
         var newIngCounter = 0;
         $("#add-new-ingredient-btn").click(function(){
             newIngCounter++;
-            $("#newDishIngredientsTable").append('<tr><td><div class="form-group"><select name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control" required="required"><option disabled="disabled" value="" selected hidden>Nazwa składnika</option></select></div></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" step="0.001" required/></td></tr>');
+            $("#newDishIngredientsTable").append('<tr><td><div class="form-group"><select name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control" required="required"><option disabled="disabled" value="" selected hidden>Nazwa składnika</option></select></div></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" step="0.001" required/></td>' +
+            '<td><button type="button" onclick="deleteIngredient(this)" style="padding: 0;border: none; background: none;"><i class="fas fa-trash" style="color: red"></i></button></td></tr>');
             var select = document.getElementById('ingredients' + newIngCounter + '.name')
             for (var ingredient of generalIngredients) {
                 select.options[select.options.length] = new Option(ingredient.name, ingredient.name);
             }
         });
+
+        function deleteIngredient(element) {
+            event.preventDefault();
+            $(element).parents('tr').remove();
+        }
 </script>
 </body>
 </html>
