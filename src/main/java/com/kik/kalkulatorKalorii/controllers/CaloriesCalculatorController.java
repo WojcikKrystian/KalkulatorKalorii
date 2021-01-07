@@ -75,41 +75,48 @@ public class CaloriesCalculatorController {
 
     @PostMapping("/dishes/new")
     public String addIngredientToNewDishForm(@ModelAttribute Dish dish, Model model) {
-        double proteinsTotal = 0.0;
-        double carbsTotal = 0.0;
-        double fatTotal = 0.0;
-        double calTotal = 0.0;
+        Long newDishID = service.saveDish(new Dish());
+        Optional<Dish> newDishOptional = service.getDishById(newDishID);
 
-        for(Ingredient ingredient : dish.getIngredients()) {
-            Optional<Ingredient> generalIngredientOptional = service.getGeneralIngredientByName(ingredient.getName());
+        newDishOptional.ifPresent(newDish -> {
+            double proteinsTotal = 0.0;
+            double carbsTotal = 0.0;
+            double fatTotal = 0.0;
+            double calTotal = 0.0;
+            List<Ingredient> ingredients = new ArrayList<>();
 
-            if(generalIngredientOptional.isPresent()) {
-                Ingredient generalIngredient = generalIngredientOptional.get();
-                if(generalIngredient.getProteins() != null) {
-                    proteinsTotal += generalIngredient.getProteins() * ingredient.getAmount() / 100;
+            for (Ingredient ingredient : dish.getIngredients()) {
+                List<Ingredient> generalIngredients = service.getGeneralIngredientByName(ingredient.getName());
+
+                if (!generalIngredients.isEmpty()) {
+                    Ingredient generalIngredient = generalIngredients.get(0);
+                    if (generalIngredient.getProteins() != null) {
+                        proteinsTotal += generalIngredient.getProteins() * ingredient.getAmount() / 100;
+                    }
+                    if (generalIngredient.getCarbs() != null) {
+                        carbsTotal += generalIngredient.getCarbs() * ingredient.getAmount() / 100;
+                    }
+                    if (generalIngredient.getFat() != null) {
+                        fatTotal += generalIngredient.getFat() * ingredient.getAmount() / 100;
+                    }
+                    if (generalIngredient.getKcal() != null) {
+                        calTotal += generalIngredient.getKcal() * ingredient.getAmount() / 100;
+                    }
                 }
-                if(generalIngredient.getCarbs() != null) {
-                    carbsTotal += generalIngredient.getCarbs() * ingredient.getAmount() / 100;
-                }
-                if(generalIngredient.getFat() != null) {
-                    fatTotal += generalIngredient.getFat() * ingredient.getAmount() / 100;
-                }
-                if(generalIngredient.getKcal() != null) {
-                    calTotal += generalIngredient.getKcal() * ingredient.getAmount() / 100;
-                }
+                ingredient.setDish(newDish);
+                ingredients.add(ingredient);
             }
-        }
 
-        Dish newDish = Dish.builder()
-                .name(dish.getName())
-                .proteinsTotal(proteinsTotal)
-                .calTotal(calTotal)
-                .carbsTotal(carbsTotal)
-                .fatTotal(fatTotal)
-                .ingredients(dish.getIngredients())
-                .build();
+            newDish.setName(dish.getName());
+            newDish.setProteinsTotal(Math.round(proteinsTotal * 100.0) / 100.0);
+            newDish.setCalTotal(Math.round(calTotal * 100.0) / 100.0);
+            newDish.setCarbsTotal(Math.round(carbsTotal * 100.0) / 100.0);
+            newDish.setFatTotal(Math.round(fatTotal * 100.0) / 100.0);
+            newDish.setIngredients(ingredients);
 
-        service.saveDish(newDish);
+            service.saveDish(newDish);
+        });
+
         return "redirect:/dishes";
     }
 
@@ -128,7 +135,7 @@ public class CaloriesCalculatorController {
     @GetMapping("/ingredients/edit/{ingredientId}")
     public String editIngredient(@PathVariable Long ingredientId, Model model) {
         Optional<Ingredient> ingredientOptional = service.getIngredientById(ingredientId);
-        if(ingredientOptional.isPresent()) {
+        if (ingredientOptional.isPresent()) {
             model.addAttribute("ingredient", ingredientOptional.get());
             return "ingredient-details";
         }
@@ -139,5 +146,22 @@ public class CaloriesCalculatorController {
     public String editIngredient(@PathVariable Long ingredientId, @ModelAttribute Ingredient ingredient) {
         service.updateIngredient(ingredientId, ingredient);
         return "redirect:/ingredients";
+    }
+
+    @GetMapping("/dishes/edit/{dishId}")
+    public String editDish(@PathVariable Long dishId, Model model) {
+        Optional<Dish> dishOptional = service.getDishById(dishId);
+        if (dishOptional.isPresent()) {
+            model.addAttribute("dish", dishOptional.get());
+            model.addAttribute("generalIngredients", service.getAllGeneralIngredients());
+            return "dish-details";
+        }
+        return "dishes";
+    }
+
+    @PostMapping("/dishes/edit/{dishId}")
+    public String editDish(@PathVariable Long dishId, @ModelAttribute Dish dish) {
+        service.updateDish(dishId, dish);
+        return "redirect:/dishes";
     }
 }

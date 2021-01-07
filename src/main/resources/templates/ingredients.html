@@ -22,20 +22,22 @@
             <div class="col form-group">
                 <label for="carbs">Węglowodany</label>
                 <input th:field="*{carbs}" type="number" class="form-control" id="carbs" placeholder="Węglowodany"
-                       required>
+                       step="0.001" required>
             </div>
             <div class="col form-group">
                 <label for="proteins">Białka</label>
                 <input th:field="*{proteins}" type="number" class="form-control" id="proteins" placeholder="Białko"
-                       required>
+                       step="0.001" required>
             </div>
             <div class="col form-group">
                 <label for="fat">Tłuszcze</label>
-                <input th:field="*{fat}" type="number" class="form-control" id="fat" placeholder="Tłuszcze" required>
+                <input th:field="*{fat}" type="number" class="form-control" id="fat" placeholder="Tłuszcze"
+                       step="0.001" required>
             </div>
             <div class="col form-group">
                 <label for="kcal">Kcal</label>
-                <input th:field="*{kcal}" type="number" class="form-control" id="kcal" placeholder="Kcal" required>
+                <input th:field="*{kcal}" type="number" class="form-control" id="kcal" placeholder="Kcal"
+                       step="0.001" required>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Dodaj</button>

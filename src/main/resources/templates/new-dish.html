@@ -39,7 +39,7 @@
                                 </td>
                                 <td>
                                     <input type="number" th:field="*{ingredients[__${i.index}__].amount}"
-                                           class="form-control ingredientName" placeholder="Ilość [g]"/>
+                                           class="form-control ingredientName" placeholder="Ilość [g]" step="0.001" required/>
                                 </td>
                             </tr>
                             </tbody>
@@ -62,7 +62,7 @@
         var newIngCounter = 0;
         $("#add-new-ingredient-btn").click(function(){
             newIngCounter++;
-            $("#newDishIngredientsTable").append('<tr><td><div class="form-group"><select name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control" required="required"><option disabled="disabled" value="" selected hidden>Nazwa składnika</option></select></div></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" /></td></tr>');
+            $("#newDishIngredientsTable").append('<tr><td><div class="form-group"><select name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control" required="required"><option disabled="disabled" value="" selected hidden>Nazwa składnika</option></select></div></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" step="0.001" required/></td></tr>');
             var select = document.getElementById('ingredients' + newIngCounter + '.name')
             for (var ingredient of generalIngredients) {
                 select.options[select.options.length] = new Option(ingredient.name, ingredient.name);

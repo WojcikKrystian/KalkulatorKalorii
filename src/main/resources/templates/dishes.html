@@ -41,10 +41,14 @@
             <td th:text="${dish.carbsTotal}"></td>
             <td th:text="${dish.calTotal}"></td>
             <td>
-                <div class="col form-group">
+                <div class="col form-row">
                     <form action="#" th:action="@{'/dishes/delete/{id}'(id=${dish.id})}"
                           method="post">
-                        <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                        <button type="submit" class="btn btn-danger btn-sm" style="margin-right: 5px">Usuń</button>
+                    </form>
+                    <form action="#" th:action="@{'/dishes/edit/{id}'(id=${dish.id})}"
+                          method="get">
+                        <button type="submit" class="btn btn-info btn-sm">Edytuj</button>
                     </form>
                 </div>
             </td>

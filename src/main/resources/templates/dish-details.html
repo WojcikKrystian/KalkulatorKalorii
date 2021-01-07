@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Kalorii</title>
+    <link href="../../webjars/bootstrap/4.5.3/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<div th:replace="/navbar :: navbar"></div>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Edytuj potrawę</h5>
+            <form action="#" th:action="@{/dishes/edit/{id} (id=${dish.id})}" th:object="${dish}" method="post">
+                <div class="form-group">
+                    <div class="row">
+                        <label for="name">Nazwa potrawy</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="Wpisz nazwę"
+                               required>
+                    </div>
+                    <div class="row">
+                        <label for="name">Kalorie w sumie</label>
+                        <input th:field="*{calTotal}" type="text" class="form-control" id="calTotal"
+                               th:text="${#numbers.formatDecimal(calTotal,0,3,'COMMA')}" readonly>
+                    </div>
+                    <div class="row">
+                        <label for="name">Węglowodany w sumie</label>
+                        <input th:field="*{carbsTotal}" type="text" class="form-control" id="carbsTotal"
+                               readonly>
+                    </div>
+                    <div class="row">
+                        <label for="name">Tłuszcz w sumie</label>
+                        <input th:field="*{fatTotal}" type="text" class="form-control" id="fatTotal"
+                               readonly>
+                    </div>
+                    <div class="row">
+                        <label for="name">Białko w sumie</label>
+                        <input th:field="*{proteinsTotal}" type="text" class="form-control" id="proteinsTotal"
+                               th:value="${#numbers.formatDecimal(dish.proteinsTotal,0,3,'COMMA')}" readonly>
+                    </div>
+                    <div class="row">
+                        <label for="name">Składniki</label>
+                        <table class="table table-striped">
+                            <tbody th:if="${dish.ingredients.size() != 0}" th:each="ingredient,i : ${dish.ingredients}"
+                                   id="dishIngredientsTable">
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" required="required"
+                                                th:field="*{ingredients[__${i.index}__].name}">
+                                            <option disabled="disabled" value="" selected hidden>Nazwa składnika
+                                            </option>
+                                            <option th:each="ingredient : ${dish.ingredients}"
+                                                    th:value="${ingredient.name}"
+                                                    th:text="${ingredient.name}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="number" th:field="*{ingredients[__${i.index}__].amount}"
+                                           class="form-control ingredientName" placeholder="Ilość [g]" step="0.001" required/>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tbody th:if="${dish.ingredients.size() == 0}" id="dishIngredientsTable">
+                            <tr><td>To danie nie ma jeszcze składników</td></tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <button type="button" id="add-new-ingredient-btn" class="btn-sm btn-primary">Dodaj
+                                składnik
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary card-link">Aktualizuj</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+        var generalIngredients = [[${generalIngredients}]];
+        var newIngCounter = 0;
+        $("#add-new-ingredient-btn").click(function(){
+            newIngCounter++;
+            $("#dishIngredientsTable").append('<tr><td><div class="form-group"><select name="ingredients[' + newIngCounter + '].name" id="ingredients' + newIngCounter + '.name" class="form-control" required="required"><option disabled="disabled" value="" selected hidden>Nazwa składnika</option></select></div></td><td><input name="ingredients[' + newIngCounter + '].amount" id="ingredients' + newIngCounter + '.amount" class="form-control" type="number" id="amount" placeholder="Ilość [g]" step="0.001" required/></td></tr>');
+            var select = document.getElementById('ingredients' + newIngCounter + '.name')
+            for (var ingredient of generalIngredients) {
+                select.options[select.options.length] = new Option(ingredient.name, ingredient.name);
+            }
+        });
+
+</script>
+</body>
+</html>
